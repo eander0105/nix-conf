@@ -29,7 +29,7 @@
   };
 
   networking = {
-    hostName = "castor";
+    hostName = "nixos"; # "castor"
     networkmanager = {
       enable = true;
       appendNameservers = [ "8.8.8.8" ];
@@ -65,13 +65,6 @@
     isNormalUser = true;
     description = "Emil Andersson";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "docker" ];
-    packages = with pkgs; [
-      (wineWowPackages.full.override {
-        wineRelease = "staging";
-        mingwSupport = true;
-      })
-      winetricks
-    ];
   };
 
   # Allow unfree packages
@@ -87,7 +80,7 @@
     ghostty
     jetbrains-mono
 
-    wofi
+    # wofi
 
     docker
     docker-compose
@@ -95,10 +88,10 @@
     nodejs
     mkcert
     nssTools
-    android-studio
+    # android-studio
 
-    python312
-    python312Packages.sqlalchemy
+    python314
+    python314Packages.sqlalchemy
 
     go
     # Ebitengiene deps
@@ -111,7 +104,13 @@
     GSK_RENDERER="gl";
   };
 
+  # python3.12's "doc" output currently fails to build (upstream docutils/sphinx
+  # incompatibility), and it gets pulled in by default since documentation.doc.enable
+  # installs the doc output of every systemPackage. Disable to unblock builds.
+  documentation.doc.enable = false;
+
   # programs.wofi.enable = true;
+  programs.nix-ld.enable = true;
 
   services.flatpak.enable = true;
   services.teamviewer.enable = true;

@@ -60,12 +60,12 @@
               solaar.nixosModules.default
             ];
           };
-          ## OLD ZOEZI setup
-          # castor = lib.nixosSystem {
-          #   inherit specialArgs;
-          #   system = "x86_64-linux";
-          #   modules = [ ./hosts/castor-old ];
-          # };
+          # OLD ZOEZI setup
+          castor = lib.nixosSystem {
+            inherit specialArgs;
+            system = "x86_64-linux";
+            modules = [ ./hosts/castor ];
+          };
         };
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
