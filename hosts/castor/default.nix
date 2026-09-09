@@ -112,6 +112,14 @@
   # programs.wofi.enable = true;
   programs.nix-ld.enable = true;
 
+  services.fprintd = {
+    enable = true;
+    package = pkgs.fprintd-tod;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-goodix;
+    };
+  };
   services.flatpak.enable = true;
   services.teamviewer.enable = true;
 
