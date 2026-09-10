@@ -98,6 +98,12 @@
     gcc
 
     discord
+    (pkgs.writeShellScriptBin "liu-vpn" ''
+      HOST="remote.edu.liu.se:443"
+      ${pkgs.openfortivpn-webview}/bin/openfortivpn-webview "$HOST" 2>/dev/null \
+        | sudo ${pkgs.openfortivpn}/bin/openfortivpn "$HOST" \
+            --cookie-on-stdin --pppd-accept-remote
+    '')
   ];
 
   environment.sessionVariables = {
@@ -119,6 +125,10 @@
       enable = true;
       driver = pkgs.libfprint-2-tod1-goodix;
     };
+  };
+  security.pam.services.sudo.fprintAuth = false;
+  services.tailscale = {
+    enable = true;
   };
   services.flatpak.enable = true;
   services.teamviewer.enable = true;
